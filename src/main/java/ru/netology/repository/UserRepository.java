@@ -29,6 +29,7 @@ public class UserRepository {
             if ((user.equals(key)) && (password.equals(value))) {
                 return Authorities.asList();
             }
-        }  return Collections.emptyList();
+        }
+        return Collections.emptyList();
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.netology.exciption.InvalidCredentials;
+import ru.netology.exciption.UnauthorizedUser;
 import ru.netology.service.Authorities;
 import ru.netology.service.AuthorizationService;
 
@@ -25,13 +26,15 @@ public class AuthorizationController {
         return service.getAuthorities(user, password);
     }
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(InvalidCredentials.class)
     ResponseEntity<String> InvalidCredentialsEx(InvalidCredentials e) {
-        return new ResponseEntity<>("User name or password is empty" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        System.out.println("Error 400: " + e.getMessage());
+        return new ResponseEntity<>("Error 400:" + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(UnauthorizedUser.class)
     ResponseEntity<String> UnauthorizedUserEx(InvalidCredentials e) {
-        return new ResponseEntity<>("Unknown user "  + e.getMessage(), HttpStatus.UNAUTHORIZED);
+        System.out.println("Error 401: " + e.getMessage());
+        return new ResponseEntity<>("Error 401: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 }

@@ -1,13 +1,21 @@
 package ru.netology.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.netology.exciption.InvalidCredentials;
+import ru.netology.exciption.UnauthorizedUser;
 import ru.netology.repository.UserRepository;
 
 import java.util.List;
 
 @Service
 public class AuthorizationService {
+
     UserRepository userRepository;
+    @Autowired
+    public AuthorizationService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<Authorities> getAuthorities(String user, String password) {
         if (isEmpty(user) || isEmpty(password)) {
@@ -26,17 +34,5 @@ public class AuthorizationService {
 
     private boolean isEmpty(List<?> str) {
         return str == null || str.isEmpty();
-    }
-
-    public class InvalidCredentials extends RuntimeException {
-        public InvalidCredentials(String msg) {
-            super(msg);
-        }
-    }
-
-    public class UnauthorizedUser extends RuntimeException {
-        public UnauthorizedUser(String msg) {
-            super(msg);
-        }
     }
 }

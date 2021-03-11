@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  appDocker_1:
+    image: my_app:1.0
+    ports:
+    - 8080
+    entrypoint:
+      TEST: env_TEST_2
+  appDocker_2:
+    image: my_app:2.0
+    ports:
+      - 8080
+    entrypoint:
+      TEST: env_TEST_2
